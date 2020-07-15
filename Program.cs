@@ -35,7 +35,7 @@ namespace iplogger
                 using (var message = new MailMessage(fromAddress, toAddress)
                 {
                     Subject = publicip
-                    ,Body = mac
+                    ,Body = mac + publicip
                 })
                 {
                     smtp.Send(message);
