@@ -1,5 +1,3 @@
 # grab-public-ip
-my first "usefull" C# program, a ip and mac grabber with ftp log
-you need a ftp server (obviously)
-build the file and follow the istructions in the source file for setting it
-coming soon smtp version!
+my first "usefull" C# program, a ip and mac grabber with smtp log
+copy the code to your solution, change the settings and hit compile! happy logging!
